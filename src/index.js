@@ -12,6 +12,8 @@ export default function promiseMiddleware({ dispatch }) {
         : next(action);
     }
 
+    dispatch({ ...action, meta: { ...(action.meta || {}), subAction: "pending" } })
+
     return isPromise(action.payload)
       ? action.payload.then(
           result => dispatch({ ...action, payload: result }),
